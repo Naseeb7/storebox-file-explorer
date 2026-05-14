@@ -28,24 +28,24 @@ const ExplorerItem = ({ item, depth }: ExplorerItemProps) => {
       <button
         type="button"
         onClick={handleToggle}
-        className="flex w-full items-center gap-2 rounded-md px-2 py-1 text-left text-sm text-slate-700 transition-colors hover:bg-slate-100 hover:text-slate-900"
-        style={{ paddingLeft: `${depth * 16 + 8}px` }}
+        className="flex h-6 w-full items-center gap-1 rounded-sm px-1.5 text-left text-[13px] text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-800 dark:text-slate-300 dark:hover:bg-slate-800/60 dark:hover:text-slate-100"
+        style={{ paddingLeft: `${depth * 12 + 6}px` }}
       >
-        <span className="flex h-4 w-4 items-center justify-center text-slate-500">
+        <span className="flex h-4 w-4 shrink-0 items-center justify-center text-slate-400 dark:text-slate-500">
           {hasChildren && (
             isExpanded ? (
-              <ChevronDown className="h-4 w-4" />
+              <ChevronDown className="h-3.5 w-3.5" strokeWidth={2} />
             ) : (
-              <ChevronRight className="h-4 w-4" />
+              <ChevronRight className="h-3.5 w-3.5" strokeWidth={2} />
             )
           )}
         </span>
         {isFolder ? (
-          <Folder className="h-4 w-4 text-amber-500" />
+          <Folder className="h-4 w-4 shrink-0 text-slate-500 dark:text-slate-400" strokeWidth={1.8} />
         ) : (
-          <File className="h-4 w-4 text-slate-500" />
+          <File className="h-4 w-4 shrink-0 text-slate-400 dark:text-slate-500" strokeWidth={1.8} />
         )}
-        <span className="truncate">{item.name}</span>
+        <span className="truncate leading-none">{item.name}</span>
       </button>
 
       {hasChildren && isExpanded ? (
