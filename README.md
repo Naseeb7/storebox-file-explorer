@@ -53,6 +53,28 @@ The UI uses semantic tokens defined in `app/globals.css`:
 - neutral, VS Code-inspired palette
 - reusable semantic classes (`panel`, `tree-row`, `editor-input`)
 
+## Local Setup
+
+Clone the repository and install dependencies:
+
+```bash
+git clone https://github.com/Naseeb7/storebox-file-explorer
+cd storebox-file-explorer
+npm install
+```
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+Open:
+
+```text
+http://localhost:3000
+```
+
 ## Development
 
 ```bash
@@ -65,6 +87,18 @@ Run quality checks:
 ```bash
 npm run lint
 npm run build
+```
+
+Create a production build:
+
+```bash
+npm run build
+```
+
+Run production locally:
+
+```bash
+npm start
 ```
 
 ## Engineering Workflow
