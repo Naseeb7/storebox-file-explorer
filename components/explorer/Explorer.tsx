@@ -1,9 +1,16 @@
-import React from "react";
+import { ExplorerNode } from "@/types/explorer";
+import ExplorerItem from "./ExplorerItem";
 
-type Props = {};
+interface ExplorerProps {
+  data: ExplorerNode[];
+}
 
-const Explorer = (props: Props) => {
-  return <div>Explorer</div>;
-};
-
-export default Explorer;
+export default function Explorer({ data }: ExplorerProps) {
+  return (
+    <div className="py-2">
+      {data.map((item) => (
+        <ExplorerItem key={item.id} item={item} depth={0} />
+      ))}
+    </div>
+  );
+}
