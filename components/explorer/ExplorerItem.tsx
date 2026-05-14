@@ -50,11 +50,21 @@ const ExplorerItem = ({
     onSelectFile(item.id);
   };
 
+  const handleItemKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key !== "Enter" && event.key !== " ") {
+      return;
+    }
+    event.preventDefault();
+    handleItemClick();
+  };
+
   return (
     <div>
-      <button
-        type="button"
+      <div
+        role="button"
+        tabIndex={0}
         onClick={handleItemClick}
+        onKeyDown={handleItemKeyDown}
         className={`tree-row group flex h-6 w-full items-center gap-1 rounded-sm px-1.5 text-left text-[13px] transition-colors ${
           isSelectedFile ? "tree-row-selected" : ""
         }`}
@@ -132,7 +142,7 @@ const ExplorerItem = ({
             <Trash2 className="h-3.5 w-3.5" />
           </button>
         </span>
-      </button>
+      </div>
 
       {hasChildren && isExpanded ? (
         <div>
