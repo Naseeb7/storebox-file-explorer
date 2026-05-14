@@ -5,8 +5,8 @@ interface ExplorerProps {
   data: ExplorerNode[];
   selectedFileId: string | null;
   onSelectFile: (fileId: string) => void;
-  onAddFile: (folderId: string) => void;
-  onAddFolder: (folderId: string) => void;
+  onAddFile: (folderId: string) => boolean;
+  onAddFolder: (folderId: string) => boolean;
   onRename: (nodeId: string) => void;
   onDelete: (nodeId: string) => void;
 }

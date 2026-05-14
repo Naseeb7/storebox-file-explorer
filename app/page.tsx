@@ -58,10 +58,10 @@ export default function Home() {
     setTree((currentTree) => [...currentTree, node]);
   };
 
-  const handleAddFileToFolder = (folderId: string) => {
+  const handleAddFileToFolder = (folderId: string): boolean => {
     const name = window.prompt("File name?");
     if (!name?.trim()) {
-      return;
+      return false;
     }
 
     const node: ExplorerNode = {
@@ -72,12 +72,13 @@ export default function Home() {
     };
 
     setTree((currentTree) => addNode(currentTree, folderId, node));
+    return true;
   };
 
-  const handleAddFolderToFolder = (folderId: string) => {
+  const handleAddFolderToFolder = (folderId: string): boolean => {
     const name = window.prompt("Folder name?");
     if (!name?.trim()) {
-      return;
+      return false;
     }
 
     const node: ExplorerNode = {
@@ -88,6 +89,7 @@ export default function Home() {
     };
 
     setTree((currentTree) => addNode(currentTree, folderId, node));
+    return true;
   };
 
   const handleRenameNode = (nodeId: string) => {
@@ -99,6 +101,19 @@ export default function Home() {
   };
 
   const handleDeleteNode = (nodeId: string) => {
+    if (selectedFileId) {
+      const targetNode = findNodeById(tree, nodeId);
+      const selectedInsideTarget =
+        targetNode?.id === selectedFileId ||
+        (targetNode?.children
+          ? findNodeById(targetNode.children, selectedFileId) !== null
+          : false);
+
+      if (selectedInsideTarget) {
+        setSelectedFileId(null);
+      }
+    }
+
     setTree((currentTree) => deleteNode(currentTree, nodeId));
   };
 

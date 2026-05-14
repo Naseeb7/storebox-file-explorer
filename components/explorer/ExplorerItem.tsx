@@ -18,8 +18,8 @@ interface ExplorerItemProps {
   depth: number;
   selectedFileId: string | null;
   onSelectFile: (fileId: string) => void;
-  onAddFile: (folderId: string) => void;
-  onAddFolder: (folderId: string) => void;
+  onAddFile: (folderId: string) => boolean;
+  onAddFolder: (folderId: string) => boolean;
   onRename: (nodeId: string) => void;
   onDelete: (nodeId: string) => void;
 }
@@ -85,7 +85,10 @@ const ExplorerItem = ({
                 className="icon-button rounded p-0.5"
                 onClick={(event) => {
                   event.stopPropagation();
-                  onAddFile(item.id);
+                  const created = onAddFile(item.id);
+                  if (created) {
+                    setIsExpanded(true);
+                  }
                 }}
               >
                 <FilePlus2 className="h-3.5 w-3.5" />
@@ -96,7 +99,10 @@ const ExplorerItem = ({
                 className="icon-button rounded p-0.5"
                 onClick={(event) => {
                   event.stopPropagation();
-                  onAddFolder(item.id);
+                  const created = onAddFolder(item.id);
+                  if (created) {
+                    setIsExpanded(true);
+                  }
                 }}
               >
                 <FolderPlus className="h-3.5 w-3.5" />
