@@ -55,14 +55,12 @@ const ExplorerItem = ({
       <button
         type="button"
         onClick={handleItemClick}
-        className={`group flex h-6 w-full items-center gap-1 rounded-sm px-1.5 text-left text-[13px] text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-800 dark:text-slate-300 dark:hover:bg-slate-800/60 dark:hover:text-slate-100 ${
-          isSelectedFile
-            ? "bg-slate-200 text-slate-900 dark:bg-slate-700/70 dark:text-slate-100"
-            : ""
+        className={`tree-row group flex h-6 w-full items-center gap-1 rounded-sm px-1.5 text-left text-[13px] transition-colors ${
+          isSelectedFile ? "tree-row-selected" : ""
         }`}
         style={{ paddingLeft: `${depth * 12 + 6}px` }}
       >
-        <span className="flex h-4 w-4 shrink-0 items-center justify-center text-slate-400 dark:text-slate-500">
+        <span className="muted flex h-4 w-4 shrink-0 items-center justify-center">
           {hasChildren && (
             isExpanded ? (
               <ChevronDown className="h-3.5 w-3.5" strokeWidth={2} />
@@ -72,9 +70,9 @@ const ExplorerItem = ({
           )}
         </span>
         {isFolder ? (
-          <Folder className="h-4 w-4 shrink-0 text-slate-500 dark:text-slate-400" strokeWidth={1.8} />
+          <Folder className="muted h-4 w-4 shrink-0" strokeWidth={1.8} />
         ) : (
-          <File className="h-4 w-4 shrink-0 text-slate-400 dark:text-slate-500" strokeWidth={1.8} />
+          <File className="muted h-4 w-4 shrink-0" strokeWidth={1.8} />
         )}
         <span className="truncate leading-none">{item.name}</span>
 
@@ -84,7 +82,7 @@ const ExplorerItem = ({
               <button
                 type="button"
                 aria-label="Add file"
-                className="rounded p-0.5 text-slate-500 hover:bg-slate-200 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-slate-200"
+                className="icon-button rounded p-0.5"
                 onClick={(event) => {
                   event.stopPropagation();
                   onAddFile(item.id);
@@ -95,7 +93,7 @@ const ExplorerItem = ({
               <button
                 type="button"
                 aria-label="Add folder"
-                className="rounded p-0.5 text-slate-500 hover:bg-slate-200 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-slate-200"
+                className="icon-button rounded p-0.5"
                 onClick={(event) => {
                   event.stopPropagation();
                   onAddFolder(item.id);
@@ -108,7 +106,7 @@ const ExplorerItem = ({
           <button
             type="button"
             aria-label="Rename"
-            className="rounded p-0.5 text-slate-500 hover:bg-slate-200 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-slate-200"
+            className="icon-button rounded p-0.5"
             onClick={(event) => {
               event.stopPropagation();
               onRename(item.id);
@@ -119,7 +117,7 @@ const ExplorerItem = ({
           <button
             type="button"
             aria-label="Delete"
-            className="rounded p-0.5 text-slate-500 hover:bg-slate-200 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-slate-200"
+            className="icon-button rounded p-0.5"
             onClick={(event) => {
               event.stopPropagation();
               onDelete(item.id);

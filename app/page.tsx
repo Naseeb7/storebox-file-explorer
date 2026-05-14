@@ -112,7 +112,7 @@ export default function Home() {
 
   return (
     <main className="flex h-screen bg-background text-foreground">
-      <aside className="w-80 border-r border-slate-200 dark:border-slate-800">
+      <aside className="panel w-80 border-r panel-border">
         <Toolbar
           onCreateFile={handleCreateFile}
           onCreateFolder={handleCreateFolder}

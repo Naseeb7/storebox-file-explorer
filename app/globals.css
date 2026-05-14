@@ -2,22 +2,95 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #1f2937;
+  --foreground: #374151;
+  --panel: #f8fafc;
+  --panel-foreground: #4b5563;
+  --panel-border: #e2e8f0;
+  --muted: #94a3b8;
+  --hover: #f1f5f9;
+  --selected: #e2e8f0;
+  --input: #f8fafc;
+  --input-border: #d1d5db;
+  --input-focus-border: #94a3b8;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-panel: var(--panel);
+  --color-panel-foreground: var(--panel-foreground);
+  --color-panel-border: var(--panel-border);
+  --color-muted: var(--muted);
+  --color-hover: var(--hover);
+  --color-selected: var(--selected);
+  --color-input: var(--input);
+  --color-input-border: var(--input-border);
+  --color-input-focus-border: var(--input-focus-border);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 .dark {
-  --background: #0f172a;
-  --foreground: #e2e8f0;
+  --background: #1e1e1e;
+  --foreground: #d4d4d4;
+  --panel: #252526;
+  --panel-foreground: #cccccc;
+  --panel-border: #333333;
+  --muted: #8a8a8a;
+  --hover: #2a2d2e;
+  --selected: #37373d;
+  --input: #1e1e1e;
+  --input-border: #3c3c3c;
+  --input-focus-border: #5a5a5a;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
+}
+
+.panel {
+  background: var(--panel);
+  color: var(--panel-foreground);
+}
+
+.panel-border {
+  border-color: var(--panel-border);
+}
+
+.tree-row {
+  color: var(--panel-foreground);
+}
+
+.tree-row:hover {
+  background: var(--hover);
+  color: var(--foreground);
+}
+
+.tree-row-selected {
+  background: var(--selected);
+  color: var(--foreground);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.icon-button {
+  color: var(--muted);
+}
+
+.icon-button:hover {
+  background: var(--hover);
+  color: var(--foreground);
+}
+
+.editor-input {
+  background: var(--input);
+  border-color: var(--input-border);
+  color: var(--foreground);
+}
+
+.editor-input:focus {
+  border-color: var(--input-focus-border);
 }
