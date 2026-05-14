@@ -3,6 +3,8 @@ import ExplorerItem from "./ExplorerItem";
 
 interface ExplorerProps {
   data: ExplorerNode[];
+  selectedFileId: string | null;
+  onSelectFile: (fileId: string) => void;
   onAddFile: (folderId: string) => void;
   onAddFolder: (folderId: string) => void;
   onRename: (nodeId: string) => void;
@@ -11,6 +13,8 @@ interface ExplorerProps {
 
 export default function Explorer({
   data,
+  selectedFileId,
+  onSelectFile,
   onAddFile,
   onAddFolder,
   onRename,
@@ -23,6 +27,8 @@ export default function Explorer({
           key={item.id}
           item={item}
           depth={0}
+          selectedFileId={selectedFileId}
+          onSelectFile={onSelectFile}
           onAddFile={onAddFile}
           onAddFolder={onAddFolder}
           onRename={onRename}

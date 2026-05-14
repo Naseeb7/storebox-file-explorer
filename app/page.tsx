@@ -4,12 +4,21 @@ import Explorer from "@/components/explorer/Explorer";
 import Toolbar from "@/components/explorer/Toolbar";
 import Editor from "@/components/editor/Editor";
 import { initialData } from "@/data/initialData";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { ExplorerNode } from "@/types/explorer";
-import { addNode, deleteNode, renameNode } from "@/utils/explorerTree";
+import { addNode, deleteNode, findNodeById, renameNode } from "@/utils/explorerTree";
 
 export default function Home() {
   const [tree, setTree] = useState(initialData);
+  const [selectedFileId, setSelectedFileId] = useState<string | null>(null);
+
+  const selectedFile = useMemo(() => {
+    if (!selectedFileId) {
+      return null;
+    }
+    const node = findNodeById(tree, selectedFileId);
+    return node?.type === "file" ? node : null;
+  }, [selectedFileId, tree]);
 
   const handleCreateFile = () => {
     const name = window.prompt("File name?");
@@ -96,6 +105,8 @@ export default function Home() {
         />
         <Explorer
           data={tree}
+          selectedFileId={selectedFileId}
+          onSelectFile={setSelectedFileId}
           onAddFile={handleAddFileToFolder}
           onAddFolder={handleAddFolderToFolder}
           onRename={handleRenameNode}
@@ -104,7 +115,7 @@ export default function Home() {
       </aside>
 
       <section className="flex-1">
-        <Editor />
+        <Editor file={selectedFile} />
       </section>
     </main>
   );

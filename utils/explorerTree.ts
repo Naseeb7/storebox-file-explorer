@@ -113,3 +113,25 @@ export function deleteNode(tree: ExplorerNode[], nodeId: string): ExplorerNode[]
     };
   });
 }
+
+export function findNodeById(
+  tree: ExplorerNode[],
+  nodeId: string
+): ExplorerNode | null {
+  for (const node of tree) {
+    if (node.id === nodeId) {
+      return node;
+    }
+
+    if (!node.children?.length) {
+      continue;
+    }
+
+    const nestedMatch = findNodeById(node.children, nodeId);
+    if (nestedMatch) {
+      return nestedMatch;
+    }
+  }
+
+  return null;
+}

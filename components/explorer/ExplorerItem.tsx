@@ -16,6 +16,8 @@ import { ExplorerNode } from "@/types/explorer";
 interface ExplorerItemProps {
   item: ExplorerNode;
   depth: number;
+  selectedFileId: string | null;
+  onSelectFile: (fileId: string) => void;
   onAddFile: (folderId: string) => void;
   onAddFolder: (folderId: string) => void;
   onRename: (nodeId: string) => void;
@@ -25,6 +27,8 @@ interface ExplorerItemProps {
 const ExplorerItem = ({
   item,
   depth,
+  selectedFileId,
+  onSelectFile,
   onAddFile,
   onAddFolder,
   onRename,
@@ -36,19 +40,26 @@ const ExplorerItem = ({
   }, [item.type, item.children]);
   const [isExpanded, setIsExpanded] = useState(depth === 0);
 
-  const handleToggle = () => {
-    if (!isFolder) {
+  const isSelectedFile = item.type === "file" && selectedFileId === item.id;
+
+  const handleItemClick = () => {
+    if (isFolder) {
+      setIsExpanded((prev) => !prev);
       return;
     }
-    setIsExpanded((prev) => !prev);
+    onSelectFile(item.id);
   };
 
   return (
     <div>
       <button
         type="button"
-        onClick={handleToggle}
-        className="group flex h-6 w-full items-center gap-1 rounded-sm px-1.5 text-left text-[13px] text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-800 dark:text-slate-300 dark:hover:bg-slate-800/60 dark:hover:text-slate-100"
+        onClick={handleItemClick}
+        className={`group flex h-6 w-full items-center gap-1 rounded-sm px-1.5 text-left text-[13px] text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-800 dark:text-slate-300 dark:hover:bg-slate-800/60 dark:hover:text-slate-100 ${
+          isSelectedFile
+            ? "bg-slate-200 text-slate-900 dark:bg-slate-700/70 dark:text-slate-100"
+            : ""
+        }`}
         style={{ paddingLeft: `${depth * 12 + 6}px` }}
       >
         <span className="flex h-4 w-4 shrink-0 items-center justify-center text-slate-400 dark:text-slate-500">
@@ -126,6 +137,8 @@ const ExplorerItem = ({
               key={child.id}
               item={child}
               depth={depth + 1}
+              selectedFileId={selectedFileId}
+              onSelectFile={onSelectFile}
               onAddFile={onAddFile}
               onAddFolder={onAddFolder}
               onRename={onRename}
