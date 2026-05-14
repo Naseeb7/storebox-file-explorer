@@ -17,7 +17,7 @@ import {
 const TREE_STORAGE_KEY = "storebox-explorer-tree";
 
 export default function Home() {
-  const [tree, setTree] = useState(initialData);
+  const [tree, setTree] = useState<ExplorerNode[]>(initialData);
   const [selectedFileId, setSelectedFileId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -28,9 +28,13 @@ export default function Home() {
       }
 
       const parsedTree = JSON.parse(savedTree) as ExplorerNode[];
-      if (Array.isArray(parsedTree)) {
-        setTree(parsedTree);
+      if (!Array.isArray(parsedTree)) {
+        return;
       }
+
+      queueMicrotask(() => {
+        setTree(parsedTree);
+      });
     } catch {
       // Ignore invalid localStorage data.
     }

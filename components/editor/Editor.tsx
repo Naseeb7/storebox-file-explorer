@@ -8,13 +8,14 @@ interface EditorProps {
 
 const Editor = ({ file, onChangeContent }: EditorProps) => {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const selectedFileId = file?.id;
 
   useEffect(() => {
-    if (!file) {
+    if (!selectedFileId) {
       return;
     }
     textareaRef.current?.focus();
-  }, [file?.id]);
+  }, [selectedFileId]);
 
   if (!file) {
     return (
