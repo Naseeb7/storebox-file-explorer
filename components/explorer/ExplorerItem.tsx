@@ -24,6 +24,8 @@ interface ExplorerItemProps {
   onDelete: (nodeId: string) => void;
 }
 
+const DEPTH_INDENT_PX = 16;
+
 const ExplorerItem = ({
   item,
   depth,
@@ -65,10 +67,9 @@ const ExplorerItem = ({
         tabIndex={0}
         onClick={handleItemClick}
         onKeyDown={handleItemKeyDown}
-        className={`tree-row group flex h-6 w-full items-center gap-1 rounded-sm px-1.5 text-left text-[13px] transition-colors ${
+        className={`tree-row group flex h-6 w-full cursor-pointer items-center gap-1 rounded-sm px-1.5 text-left text-[13px] transition-colors ${
           isSelectedFile ? "tree-row-selected" : ""
         }`}
-        style={{ paddingLeft: `${depth * 12 + 6}px` }}
       >
         <span className="muted flex h-4 w-4 shrink-0 items-center justify-center">
           {hasChildren && (
@@ -145,7 +146,7 @@ const ExplorerItem = ({
       </div>
 
       {hasChildren && isExpanded ? (
-        <div>
+        <div style={{ paddingLeft: `${DEPTH_INDENT_PX}px` }}>
           {item.children!.map((child) => (
             <ExplorerItem
               key={child.id}

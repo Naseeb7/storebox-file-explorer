@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { ExplorerNode } from "@/types/explorer";
 
 interface EditorProps {
@@ -6,6 +7,15 @@ interface EditorProps {
 }
 
 const Editor = ({ file, onChangeContent }: EditorProps) => {
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+
+  useEffect(() => {
+    if (!file) {
+      return;
+    }
+    textareaRef.current?.focus();
+  }, [file?.id]);
+
   if (!file) {
     return (
       <div className="muted flex h-full items-center justify-center text-sm">
@@ -20,6 +30,7 @@ const Editor = ({ file, onChangeContent }: EditorProps) => {
         {file.name}
       </h2>
       <textarea
+        ref={textareaRef}
         value={file.content || ""}
         onChange={(event) => onChangeContent(event.target.value)}
         className="editor-input h-[calc(100%-2rem)] w-full resize-none rounded-md border p-3 font-mono text-sm outline-none"
