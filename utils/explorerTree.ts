@@ -135,3 +135,36 @@ export function findNodeById(
 
   return null;
 }
+
+export function updateNodeContent(
+  tree: ExplorerNode[],
+  nodeId: string,
+  content: string
+): ExplorerNode[] {
+  return mapTree(tree, (node) => {
+    if (node.id === nodeId) {
+      if (node.type !== "file" || node.content === content) {
+        return node;
+      }
+
+      return {
+        ...node,
+        content,
+      };
+    }
+
+    if (!node.children?.length) {
+      return node;
+    }
+
+    const updatedChildren = updateNodeContent(node.children, nodeId, content);
+    if (updatedChildren === node.children) {
+      return node;
+    }
+
+    return {
+      ...node,
+      children: updatedChildren,
+    };
+  });
+}

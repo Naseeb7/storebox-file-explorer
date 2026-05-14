@@ -6,7 +6,13 @@ import Editor from "@/components/editor/Editor";
 import { initialData } from "@/data/initialData";
 import { useMemo, useState } from "react";
 import { ExplorerNode } from "@/types/explorer";
-import { addNode, deleteNode, findNodeById, renameNode } from "@/utils/explorerTree";
+import {
+  addNode,
+  deleteNode,
+  findNodeById,
+  renameNode,
+  updateNodeContent,
+} from "@/utils/explorerTree";
 
 export default function Home() {
   const [tree, setTree] = useState(initialData);
@@ -96,6 +102,14 @@ export default function Home() {
     setTree((currentTree) => deleteNode(currentTree, nodeId));
   };
 
+  const handleEditorContentChange = (content: string) => {
+    if (!selectedFileId) {
+      return;
+    }
+
+    setTree((currentTree) => updateNodeContent(currentTree, selectedFileId, content));
+  };
+
   return (
     <main className="flex h-screen bg-background text-foreground">
       <aside className="w-80 border-r border-slate-200 dark:border-slate-800">
@@ -115,7 +129,7 @@ export default function Home() {
       </aside>
 
       <section className="flex-1">
-        <Editor file={selectedFile} />
+        <Editor file={selectedFile} onChangeContent={handleEditorContentChange} />
       </section>
     </main>
   );
