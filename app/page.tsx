@@ -4,7 +4,7 @@ import Explorer from "@/components/explorer/Explorer";
 import Toolbar from "@/components/explorer/Toolbar";
 import Editor from "@/components/editor/Editor";
 import { initialData } from "@/data/initialData";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ExplorerNode } from "@/types/explorer";
 import {
   addNode,
@@ -14,9 +14,35 @@ import {
   updateNodeContent,
 } from "@/utils/explorerTree";
 
+const TREE_STORAGE_KEY = "storebox-explorer-tree";
+
 export default function Home() {
   const [tree, setTree] = useState(initialData);
   const [selectedFileId, setSelectedFileId] = useState<string | null>(null);
+
+  useEffect(() => {
+    try {
+      const savedTree = window.localStorage.getItem(TREE_STORAGE_KEY);
+      if (!savedTree) {
+        return;
+      }
+
+      const parsedTree = JSON.parse(savedTree) as ExplorerNode[];
+      if (Array.isArray(parsedTree)) {
+        setTree(parsedTree);
+      }
+    } catch {
+      // Ignore invalid localStorage data.
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(TREE_STORAGE_KEY, JSON.stringify(tree));
+    } catch {
+      // Ignore persistence failures (e.g. storage blocked).
+    }
+  }, [tree]);
 
   const selectedFile = useMemo(() => {
     if (!selectedFileId) {
